@@ -11,7 +11,11 @@ const app = express();
 const port = process.env.PORT || 5001;
 
 //middleware
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+}));
+
 app.use(express.json());
 // FIXED
 
@@ -24,12 +28,12 @@ app.use((req, res, next) => {
 
 app.use("/api/notes", notesRoutrs);
 
-connectDb().then(()=>{
-
-app.listen(port, () => {
-  console.log("server started");
+connectDb().then(() => {
+  app.listen(port, "0.0.0.0", () => {
+    console.log("Server started on port", PORT);
+  });
 });
 
-});
+
 
 
